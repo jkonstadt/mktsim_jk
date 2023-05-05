@@ -1,0 +1,29 @@
+mktsim\_jk.order\_execution package
+===================================
+
+Submodules
+----------
+
+mktsim\_jk.order\_execution.order\_agent module
+-----------------------------------------------
+
+.. automodule:: mktsim_jk.order_execution.order_agent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mktsim\_jk.order\_execution.order\_agent\_limit module
+------------------------------------------------------
+
+.. automodule:: mktsim_jk.order_execution.order_agent_limit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mktsim_jk.order_execution
+   :members:
+   :undoc-members:
+   :show-inheritance:

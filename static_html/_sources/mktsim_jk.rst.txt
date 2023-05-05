@@ -1,0 +1,20 @@
+mktsim\_jk package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 5
+
+   mktsim_jk.order_execution
+   mktsim_jk.order_management
+   mktsim_jk.publishers
+
+Module contents
+---------------
+
+.. automodule:: mktsim_jk
+   :members:
+   :undoc-members:
+   :show-inheritance:

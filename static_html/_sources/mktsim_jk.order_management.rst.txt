@@ -1,0 +1,37 @@
+mktsim\_jk.order\_management package
+====================================
+
+Submodules
+----------
+
+mktsim\_jk.order\_management.order module
+-----------------------------------------
+
+.. automodule:: mktsim_jk.order_management.order
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mktsim\_jk.order\_management.order\_book module
+-----------------------------------------------
+
+.. automodule:: mktsim_jk.order_management.order_book
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mktsim\_jk.order\_management.position module
+--------------------------------------------
+
+.. automodule:: mktsim_jk.order_management.position
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mktsim_jk.order_management
+   :members:
+   :undoc-members:
+   :show-inheritance:

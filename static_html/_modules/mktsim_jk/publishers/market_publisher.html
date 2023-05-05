@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mktsim_jk.publishers.market_publisher &mdash; Market Simulator 0.1a documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Market Simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mktsim_jk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Market Simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mktsim_jk.publishers.market_publisher</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mktsim_jk.publishers.market_publisher</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Market simulation with asyncio &quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PurePath</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randrange</span><span class="p">,</span> <span class="n">seed</span>
+
+<span class="n">seed</span><span class="p">()</span>
+
+<span class="n">LOG_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="n">LOG_FORMAT</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">PurePath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MarketPublisher"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher">[docs]</a><span class="k">class</span> <span class="nc">MarketPublisher</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Market data simulator (bid/ask).</span>
+<span class="sd">    All the symbols in the market open dictionary will move according to</span>
+<span class="sd">    market_direction</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">market_open</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">market_direction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">next_quote_delay</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">price_check_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         Sets up market to publish in specified direction with a specified delay </span>
+<span class="sd">         between tick. This is useful for printing to standard output ( default ) or </span>
+<span class="sd">         to get a list of quotes that can be used to create a market</span>
+<span class="sd">         </span>
+<span class="sd">         :param market_open: Market open ( default : None )</span>
+<span class="sd">         :param market_direction: Direction of market ( default : 1 )</span>
+<span class="sd">         :param next_quote_delay: Delay between next quote ( default : 1 )</span>
+<span class="sd">         :param price_check_callback: Function to call on tick</span>
+<span class="sd">         :param output: Set to True for printing to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">market_direction</span> <span class="o">=</span> <span class="n">market_direction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_quote_delay</span> <span class="o">=</span> <span class="n">next_quote_delay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">market_open</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;IBM&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">market_open</span> <span class="k">else</span> <span class="n">market_open</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_check_callback</span> <span class="o">=</span> <span class="n">price_check_callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="MarketPublisher.is_open"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.is_open">[docs]</a>    <span class="k">def</span> <span class="nf">is_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The is_open function checks the status of the door.</span>
+<span class="sd">            If it is open, then it returns True.</span>
+<span class="sd">            If it is closed, then it returns False.</span>
+
+<span class="sd">        :param self: Refer to the instance of the class</span>
+<span class="sd">        :return: The status of the door</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.set_callback"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.set_callback">[docs]</a>    <span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used to set the callback function when a price tick is updated.</span>
+<span class="sd">        The callback should take two arguments: current price tick and new price.</span>
+
+<span class="sd">        Currently implemented as a single call back for an order. This would</span>
+<span class="sd">        need to be expanded to a set of callbacks.</span>
+
+<span class="sd">        :param self: Represent the instance of the class</span>
+<span class="sd">        :param callback: Set the function to be called when price tick is updated</span>
+<span class="sd">        :return: Nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_check_callback</span> <span class="o">=</span> <span class="n">callback</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.schedule_close"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.schedule_close">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">schedule_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds_til_close</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The schedule_close function is used to schedule the closing of a market.</span>
+<span class="sd">        It takes in an optional parameter, seconds_til_close, which defaults to 5 if not specified.</span>
+<span class="sd">        The function then sleeps for the number of seconds specified by this parameter and closes</span>
+<span class="sd">        the market by setting its status attribute to False.</span>
+
+<span class="sd">        Schedule close of market by setting status to False for Market. Closes market by</span>
+<span class="sd">        setting status to False</span>
+
+<span class="sd">        :param self: Represent the instance of the object itself</span>
+<span class="sd">        :param seconds_til_close: Set the amount of time until the market closes</span>
+<span class="sd">        :return: The close_market function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Seconds until market closes: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">seconds_til_close</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">seconds_til_close</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close_market</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.close_market"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.close_market">[docs]</a>    <span class="k">def</span> <span class="nf">close_market</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mark market as closed. Will prevent future executions.</span>
+
+<span class="sd">        Until other market sessions are added, of course ...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.get_market"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.get_market">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_market</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves BIDs for all stocks according to market_direction. Once new BID is</span>
+<span class="sd">        calculated, will set ASK based on spread</span>
+<span class="sd">        Prices fluctuate up to $2 (tic size = $0.25)</span>
+
+<span class="sd">        Get Market Quote based on market_direction and next_quote_delay This is a</span>
+<span class="sd">        generator function that iterates through all open market quotes and calls</span>
+<span class="sd">        move_market and set_market</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spread</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_quote_delay</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_open</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="c1"># Move BID</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_market</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+            <span class="c1"># Set ASK based on random spread</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">spread</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+                <span class="n">time_stamp</span> <span class="o">=</span> <span class="s2">&quot;{:%H:%M:%S}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+                <span class="n">bid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">ask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time_stamp</span><span class="si">:</span><span class="s2">8s</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">symbol</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">bid</span><span class="si">:</span><span class="s2">7.2f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">ask</span><span class="si">:</span><span class="s2">7.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_check_callback</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">price_check_callback</span><span class="p">(</span>
+                    <span class="n">symbol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.move_market"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.move_market">[docs]</a>    <span class="k">def</span> <span class="nf">move_market</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the market according to market_direction. This is a function</span>
+<span class="sd">        to be called from Market.</span>
+
+<span class="sd">        price adjust creates spread of +- $1.00 with ticks of $0.25</span>
+
+<span class="sd">        :param symbol: The symbol we want to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">price_adjust</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_direction</span>
+
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Symbol not listed in market&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_open</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">market_quote</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">price_adjust</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.start_publishing"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.start_publishing">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start_publishing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The start_publishing function is the main function of this class. It creates a</span>
+<span class="sd">        task to schedule the market close, and then it enters an infinite loop that waits</span>
+<span class="sd">        for price changes on a symbol and prints them out in real time. The loop will</span>
+<span class="sd">        only exit when the market closes.</span>
+
+<span class="sd">        :param self: Represent the instance of the class</span>
+<span class="sd">        :return: True when the market is closed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schedule_close</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TIME       TICKER       BID |     ASK&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------   -------- ------- | -------&quot;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">():</span>
+            <span class="c1"># While market is open, wait for price change on symbol</span>
+            <span class="n">mkt</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_market</span><span class="p">())</span>
+            <span class="k">await</span> <span class="n">mkt</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MarketPublisher.wait_until_close"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.MarketPublisher.wait_until_close">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">wait_until_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait until the connection is closed. This is useful for tests that need to know</span>
+<span class="sd">        when to stop and wait for the connection to close and perform post close actions</span>
+
+<span class="sd">        :returns: True if the connection is closed False otherwise. Note that it may return</span>
+<span class="sd">        False in the event of an error</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">():</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../modules/mktsim_jk.publishers.html#mktsim_jk.publishers.market_publisher.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the main function of the MarketPublisher. It creates a MarketPublisher</span>
+<span class="sd">    instance and starts publishing.</span>
+
+<span class="sd">    Without any hooks, this will simply  start moving the market, and optionally printing</span>
+<span class="sd">    to the screen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">market</span> <span class="o">=</span> <span class="n">MarketPublisher</span><span class="p">(</span><span class="n">market_open</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;IBM&quot;</span><span class="p">:</span> <span class="mi">102</span><span class="p">},</span> <span class="n">market_direction</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">market</span><span class="o">.</span><span class="n">start_publishing</span><span class="p">())</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Joshua Konstadt.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
