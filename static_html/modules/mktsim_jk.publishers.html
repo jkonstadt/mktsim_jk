@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mktsim_jk.publishers package &mdash; Market Simulator 0.1a documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Market Simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">mktsim_jk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Market Simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">mktsim_jk.publishers package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/mktsim_jk.publishers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mktsim-jk-publishers-package">
+<h1>mktsim_jk.publishers package<a class="headerlink" href="#mktsim-jk-publishers-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-mktsim_jk.publishers.market_publisher">
+<span id="mktsim-jk-publishers-market-publisher-module"></span><h2>mktsim_jk.publishers.market_publisher module<a class="headerlink" href="#module-mktsim_jk.publishers.market_publisher" title="Permalink to this heading"></a></h2>
+<p>Market simulation with asyncio</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mktsim_jk.publishers.market_publisher.</span></span><span class="sig-name descname"><span class="pre">MarketPublisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market_open</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_quote_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_check_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Market data simulator (bid/ask).
+All the symbols in the market open dictionary will move according to
+market_direction</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.close_market">
+<span class="sig-name descname"><span class="pre">close_market</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.close_market"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.close_market" title="Permalink to this definition"></a></dt>
+<dd><p>Mark market as closed. Will prevent future executions.</p>
+<p>Until other market sessions are added, of course …</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.get_market">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_market</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.get_market"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.get_market" title="Permalink to this definition"></a></dt>
+<dd><p>Moves BIDs for all stocks according to market_direction. Once new BID is
+calculated, will set ASK based on spread
+Prices fluctuate up to $2 (tic size = $0.25)</p>
+<p>Get Market Quote based on market_direction and next_quote_delay This is a
+generator function that iterates through all open market quotes and calls
+move_market and set_market</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.is_open">
+<span class="sig-name descname"><span class="pre">is_open</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.is_open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.is_open" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>The is_open function checks the status of the door.</dt><dd><p>If it is open, then it returns True.
+If it is closed, then it returns False.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>self</strong> – Refer to the instance of the class</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The status of the door</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.move_market">
+<span class="sig-name descname"><span class="pre">move_market</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.move_market"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.move_market" title="Permalink to this definition"></a></dt>
+<dd><p>Moves the market according to market_direction. This is a function
+to be called from Market.</p>
+<p>price adjust creates spread of +- $1.00 with ticks of $0.25</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>symbol</strong> – The symbol we want to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.schedule_close">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">schedule_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seconds_til_close</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.schedule_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.schedule_close" title="Permalink to this definition"></a></dt>
+<dd><p>The schedule_close function is used to schedule the closing of a market.
+It takes in an optional parameter, seconds_til_close, which defaults to 5 if not specified.
+The function then sleeps for the number of seconds specified by this parameter and closes
+the market by setting its status attribute to False.</p>
+<p>Schedule close of market by setting status to False for Market. Closes market by
+setting status to False</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – Represent the instance of the object itself</p></li>
+<li><p><strong>seconds_til_close</strong> – Set the amount of time until the market closes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The close_market function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.set_callback">
+<span class="sig-name descname"><span class="pre">set_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.set_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.set_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Used to set the callback function when a price tick is updated.
+The callback should take two arguments: current price tick and new price.</p>
+<p>Currently implemented as a single call back for an order. This would
+need to be expanded to a set of callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – Represent the instance of the class</p></li>
+<li><p><strong>callback</strong> – Set the function to be called when price tick is updated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.start_publishing">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_publishing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.start_publishing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.start_publishing" title="Permalink to this definition"></a></dt>
+<dd><p>The start_publishing function is the main function of this class. It creates a
+task to schedule the market close, and then it enters an infinite loop that waits
+for price changes on a symbol and prints them out in real time. The loop will
+only exit when the market closes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>self</strong> – Represent the instance of the class</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True when the market is closed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.MarketPublisher.wait_until_close">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_until_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#MarketPublisher.wait_until_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.MarketPublisher.wait_until_close" title="Permalink to this definition"></a></dt>
+<dd><p>Wait until the connection is closed. This is useful for tests that need to know
+when to stop and wait for the connection to close and perform post close actions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the connection is closed False otherwise. Note that it may return</p>
+</dd>
+</dl>
+<p>False in the event of an error</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mktsim_jk.publishers.market_publisher.main">
+<span class="sig-prename descclassname"><span class="pre">mktsim_jk.publishers.market_publisher.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktsim_jk/publishers/market_publisher.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mktsim_jk.publishers.market_publisher.main" title="Permalink to this definition"></a></dt>
+<dd><p>This is the main function of the MarketPublisher. It creates a MarketPublisher
+instance and starts publishing.</p>
+<p>Without any hooks, this will simply  start moving the market, and optionally printing
+to the screen.</p>
+</dd></dl>
+
+</section>
+<section id="module-mktsim_jk.publishers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mktsim_jk.publishers" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Joshua Konstadt.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

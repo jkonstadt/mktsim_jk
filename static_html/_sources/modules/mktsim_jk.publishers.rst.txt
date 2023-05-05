@@ -1,0 +1,21 @@
+mktsim\_jk.publishers package
+=============================
+
+Submodules
+----------
+
+mktsim\_jk.publishers.market\_publisher module
+----------------------------------------------
+
+.. automodule:: mktsim_jk.publishers.market_publisher
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mktsim_jk.publishers
+   :members:
+   :undoc-members:
+   :show-inheritance:
